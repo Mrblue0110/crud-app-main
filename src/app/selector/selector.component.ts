@@ -52,7 +52,7 @@ export class SelectorComponent implements OnInit {
   Uid: string = "";
   querySnapshot: any;
   fireList: fireData[] = [];
-  displayedColumns: string[] = ["Link", "Cars", "Start Date", "End Date", "Action"];
+  displayedColumns: string[] = ["Cars", "Start Date", "End Date", "Action"];
   dataSource: any;
   genT: boolean = false;
   pageEvent: PageEvent | undefined;
@@ -120,6 +120,7 @@ export class SelectorComponent implements OnInit {
               this.Uid = uid
               this.authService.Linkuid = this.Uid;
               if (this.Uid) {
+                this.getData();
                 this.authService.stop();
               }
               this.popcopy(this.Uid);
@@ -197,8 +198,6 @@ export class SelectorComponent implements OnInit {
   initDataSource() {
     if (this.fireList.length > 0) {
       this.dataSource = new MatTableDataSource<fireData>(this.fireList)
-      console.log("abracadabra", this.dataSource)
-      this.dataSource.paginator = 3;
     }
   }
 }

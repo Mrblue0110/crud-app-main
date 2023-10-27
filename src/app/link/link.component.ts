@@ -40,6 +40,8 @@ export class LinkComponent implements OnInit{
       this.Plates=this.Plates.slice(0,-1);
       this.iframe=this.iframe.replace('IDgoseHere',this.Plates);
       this.safeIframe=this.sanitizer.bypassSecurityTrustResourceUrl(this.iframe);
+      console.log(this.safeIframe)
+      console.log(this.iframe)
      }
     }
 
