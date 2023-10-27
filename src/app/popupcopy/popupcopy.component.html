@@ -6,7 +6,7 @@
 </div>
 
 <div mat-dialog-content fxLayoutAlign="center center" fxLayout="column" class="title">
-<textarea id="clipboard-example-textarea"[(ngModel)]="baseUrl" cols="50" rows="3" ></textarea>
+<textarea id="clipboard-example-textarea"[(ngModel)]="baseUrl"></textarea>
 </div>
 <div fxLayoutAlign="center center" >
 <button mat-raised-button color="primary" [cdkCopyToClipboard]="baseUrl">Copy to clipboard</button>

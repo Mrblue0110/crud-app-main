@@ -33,8 +33,6 @@ interface Plates {
   selector: 'app-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.css'],
-  // standalone:true,
-  //  imports:[MatTableModule,MatPaginatorModule]
 })
 export class SelectorComponent implements OnInit {
   selectForm!: FormGroup;
@@ -58,9 +56,13 @@ export class SelectorComponent implements OnInit {
   pageEvent: PageEvent | undefined;
   pageSize: number = 5;
   length: number = 0;
-
-  constructor(public authService: AuthServiceService, private dialog: MatDialog, private firestore: Firestore, private router: Router) {
-
+  constructor(//private matPaginator: MatPaginator, 
+              public authService: AuthServiceService,
+              private dialog: MatDialog,
+              private firestore: Firestore, 
+              private router: Router) {
+                // this.paginator = this.matPaginator;
+                // this.setupPaginator();  
   }
   ngOnInit() {
 
@@ -120,7 +122,7 @@ export class SelectorComponent implements OnInit {
               this.Uid = uid
               this.authService.Linkuid = this.Uid;
               if (this.Uid) {
-                this.getData();
+                // this.getData();
                 this.authService.stop();
               }
               this.popcopy(this.Uid);
@@ -163,6 +165,8 @@ export class SelectorComponent implements OnInit {
   async getData() {
     const queryInstance = query(collection(this.firestore, 'Links'), where('Email', '==', this.authService.emailStore));
     this.querySnapshot = await getDocs(queryInstance);
+    // this.dataSource = null;
+    this.fireList = [];
     this.querySnapshot.forEach((document: any) => {
       const data = document.data() as fireData;
       if (data) {
@@ -172,6 +176,7 @@ export class SelectorComponent implements OnInit {
           PlateLabel: data.PlateLabel,
           DocumentId: document.id
         };
+
         this.fireList.push(mappedData);
 
 
@@ -182,10 +187,12 @@ export class SelectorComponent implements OnInit {
     });
     this.initDataSource();
   }
+
   @ViewChild(MatPaginator)
   set paginator(value: MatPaginator) {
     this.dataSource.paginator = value;
   }
+
   popcopy(uid: string) {
     this.dialog.open(PopupcopyComponent, {
       width: '420px',
@@ -198,6 +205,14 @@ export class SelectorComponent implements OnInit {
   initDataSource() {
     if (this.fireList.length > 0) {
       this.dataSource = new MatTableDataSource<fireData>(this.fireList)
-    }
+    } 
   }
+  // setupPaginator(): void {
+  //   // Check if the paginator is defined
+  //   if (this.paginator) {
+  //     // Perform any setup or configuration you need here
+  //     this.paginator.pageSize = 10;
+  //     this.paginator.pageSizeOptions = [5, 10, 20];
+  //   }
+  // }
 }
