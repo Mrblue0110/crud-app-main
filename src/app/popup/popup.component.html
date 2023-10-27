@@ -1,0 +1,9 @@
+<h1 mat-dialog-title class="text">Prioada de activitate începe în: {{fdate | date:'d/MMM/yy, h:mm a' }}</h1>
+<h1 mat-dialog-title class="text">și se sfarșește în: {{ldate | date:'d/MMM/yy, h:mm a'}}</h1>
+<div mat-dialog-content>
+
+</div>
+<div mat-dialog-actions class="padbutton" fxLayoutAlign="end end">
+<button mat-raised-button class="buttonNo" (click)="Nopopup()">Anulează</button>
+<button mat-raised-button  color="primary" (click)="Yespopup()" >Finalizează</button>
+</div>

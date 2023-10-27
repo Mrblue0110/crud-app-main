@@ -1,0 +1,14 @@
+.close{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 5px;
+    line-height: 10px;
+    min-width: auto;
+  }
+  .title{
+    padding-top:0;
+    margin: 0;
+  }
+  

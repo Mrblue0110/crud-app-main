@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "genarate-link": {
+      "hosting": {
+        "crud-app": [
+          "genarate-link"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "genarate-link"
+  }
+}

@@ -1,0 +1,23 @@
+<div *ngIf="!isLoading()" fxLayoutAlign="center center" fxFlexFill class="main-div" >
+  <mat-card fxFlexAlign="center" class="sclas">
+      <mat-toolbar color="primary">Login Page</mat-toolbar>
+      <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="formGroup"  (ngSubmit)='onSubmit(formGroup.value)'>
+          <mat-form-field >
+            <input matInput placeholder="User Name" formControlName="login" >
+          </mat-form-field>
+        
+          <mat-form-field >
+              <input matInput type="password" placeholder="Password" formControlName="password" >
+            </mat-form-field>
+            <button mat-raised-button class="login-form" color="primary" type="submit">Login</button>
+            <div class="padalert" *ngIf="wrong">
+              <h2>*{{masage}}</h2>
+          </div>
+        </form>
+       
+  </mat-card>
+</div>
+
+<div *ngIf="isLoading()" class="loading-indicator" fxLayoutAlign="center center" fxFlexFill>
+<mat-spinner color="warm" diameter="80" ></mat-spinner>
+</div>
