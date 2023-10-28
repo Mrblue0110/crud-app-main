@@ -41,6 +41,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatGridListModule} from '@angular/material/grid-list';
 
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,7 +90,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatGridListModule
+    MatGridListModule,
+    NgxDatatableModule
   ],
   providers: [AuthServiceService],
   bootstrap: [AppComponent]

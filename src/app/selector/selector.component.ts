@@ -1,9 +1,9 @@
-import { Component, OnInit, EventEmitter, Output, LOCALE_ID, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, LOCALE_ID, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { AuthServiceService } from '../auth-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
-import { Firestore, query, collection, addDoc, doc, updateDoc, deleteDoc, collectionData, Timestamp, getDocs, where, documentId } from '@angular/fire/firestore';
+import { Firestore, query, collection, addDoc, doc, updateDoc, deleteDoc, collectionData, Timestamp, getDocs, where} from '@angular/fire/firestore';
 import { PopupcopyComponent } from '../popupcopy/popupcopy.component';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -50,12 +50,12 @@ export class SelectorComponent implements OnInit {
   Uid: string = "";
   querySnapshot: any;
   fireList: fireData[] = [];
-  displayedColumns: string[] = ["Cars", "Start Date", "End Date", "Action"];
+  paginato: any;
+  // rows: any[] = [];
+  displayedColumns: string[] = ["Cars", "Start Date", "End Date","Action"];
+  // @ViewChild('mydatatable') mydatatable: any;
   dataSource: any;
   genT: boolean = false;
-  pageEvent: PageEvent | undefined;
-  pageSize: number = 5;
-  length: number = 0;
   constructor(//private matPaginator: MatPaginator, 
               public authService: AuthServiceService,
               private dialog: MatDialog,
@@ -70,6 +70,7 @@ export class SelectorComponent implements OnInit {
     if (!this.authService.myData) {
       this.router.navigate([''])
     } else {
+      
       this.getData();
       this.initPlates();
     }
@@ -118,11 +119,10 @@ export class SelectorComponent implements OnInit {
             const collectionInstance = collection(this.firestore, 'Links');
             this.authService.start();
             addDoc(collectionInstance, thislink,).then((docRef) => {
-              const uid = docRef.id;
-              this.Uid = uid
+              this.Uid = docRef.id;
               this.authService.Linkuid = this.Uid;
               if (this.Uid) {
-                // this.getData();
+                this.getData();
                 this.authService.stop();
               }
               this.popcopy(this.Uid);
@@ -176,22 +176,24 @@ export class SelectorComponent implements OnInit {
           PlateLabel: data.PlateLabel,
           DocumentId: document.id
         };
-
         this.fireList.push(mappedData);
-
-
         this.genT = true
       } else {
         this.genT = false
       }
     });
+    // this.uptable();
     this.initDataSource();
   }
 
   @ViewChild(MatPaginator)
   set paginator(value: MatPaginator) {
-    this.dataSource.paginator = value;
-  }
+    if(value!=undefined){
+       this.dataSource.paginator = value;
+       this.paginato=value
+       //this.dataSource.data = this.fireList;
+    }}
+  //  @ViewChild(MatPaginator, {static: true}) paginato: MatPaginator;
 
   popcopy(uid: string) {
     this.dialog.open(PopupcopyComponent, {
@@ -204,9 +206,22 @@ export class SelectorComponent implements OnInit {
   }
   initDataSource() {
     if (this.fireList.length > 0) {
-      this.dataSource = new MatTableDataSource<fireData>(this.fireList)
-    } 
+      this.dataSource = new MatTableDataSource<fireData>()
+    }
+    this.dataSource.data = this.fireList;
+    this.dataSource.paginator=this.paginato
   }
+  async deleteLink(id:string){
+     const docInstance = doc(this.firestore,'Links',id);
+     await deleteDoc(docInstance).then(()=>{
+      this.getData();
+    })
+
+  }
+  // uptable(){
+  //   this.rows = [...this.fireList];
+  //   this.mydatatable.recalculate();
+  // }
   // setupPaginator(): void {
   //   // Check if the paginator is defined
   //   if (this.paginator) {
