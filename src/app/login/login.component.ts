@@ -39,11 +39,8 @@ export class LoginComponent implements OnInit {
         this.authService.login(post).subscribe({
           next: result => {
             if(result.success){
-              console.log(result)
               this.authService.load(result).subscribe(data=>{
                 if(data){
-                console.log(data)
-                
                 this.authService.myData = data ;
                 this.authService.emailStore=this.formGroup.value.login;
                 this.authService.stop();

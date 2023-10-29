@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { AuthServiceService } from '../auth-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
-import { Firestore, query, collection, addDoc, doc, updateDoc, deleteDoc, collectionData, Timestamp, getDocs, where} from '@angular/fire/firestore';
+import { Firestore, query, collection, addDoc, doc, updateDoc, deleteDoc, collectionData, Timestamp, getDocs, where, orderBy} from '@angular/fire/firestore';
 import { PopupcopyComponent } from '../popupcopy/popupcopy.component';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -18,12 +18,15 @@ interface LinkData {
   PlateId: Array<string>;
   PlateLabel: Array<string>;
   StartDate: string;
+  CreatedDate:Timestamp;
 }
 interface fireData {
   EndDate?: Date;
   PlateLabel?: Array<string>;
   StartDate?: Date;
+  CreatedDate?:Timestamp;
   DocumentId?: string;
+
 }
 interface Plates {
   id: string;
@@ -47,6 +50,7 @@ export class SelectorComponent implements OnInit {
   CarId: Array<string> = [];
   CarLabel: Array<string> = [];
   currentdate: Date = new Date;
+  createDate: Timestamp ;
   Uid: string = "";
   querySnapshot: any;
   fireList: fireData[] = [];
@@ -107,16 +111,18 @@ export class SelectorComponent implements OnInit {
               this.CarId.push(car.id);
               this.CarLabel.push(car.label);
             });
+            this.createDate=Timestamp.now();
             let thislink: LinkData = {
               Email: this.authService.emailStore,
               EndDate: formData.ldate._d,
               PlateId: this.CarId,
               PlateLabel: this.CarLabel,
-              StartDate: formData.fdate._d
+              StartDate: formData.fdate._d,
+              CreatedDate: this.createDate
             }
             this.authService.linkdata = thislink
-            console.log(this.authService.linkdata)
             const collectionInstance = collection(this.firestore, 'Links');
+            this.genT=false;
             this.authService.start();
             addDoc(collectionInstance, thislink,).then((docRef) => {
               this.Uid = docRef.id;
@@ -144,7 +150,6 @@ export class SelectorComponent implements OnInit {
     }
   }
   initPlates() {
-    console.log(this.authService.myData);
     this.authService.myData.list.forEach(Element => {
       let plate: Plates = {
         id: Element.id,
@@ -163,7 +168,7 @@ export class SelectorComponent implements OnInit {
     return this.authService.isloading();
   }
   async getData() {
-    const queryInstance = query(collection(this.firestore, 'Links'), where('Email', '==', this.authService.emailStore));
+    const queryInstance = query(collection(this.firestore, 'Links'), where('Email', '==', this.authService.emailStore),orderBy("CreatedDate","desc"));
     this.querySnapshot = await getDocs(queryInstance);
     // this.dataSource = null;
     this.fireList = [];
@@ -174,26 +179,26 @@ export class SelectorComponent implements OnInit {
           StartDate: data.StartDate,
           EndDate: data.EndDate,
           PlateLabel: data.PlateLabel,
-          DocumentId: document.id
+          DocumentId: document.id,
+          CreatedDate: data.CreatedDate
         };
         this.fireList.push(mappedData);
         this.genT = true
+        this.initDataSource();
       } else {
         this.genT = false
       }
     });
     // this.uptable();
-    this.initDataSource();
+   
   }
 
   @ViewChild(MatPaginator)
   set paginator(value: MatPaginator) {
     if(value!=undefined){
-       this.dataSource.paginator = value;
+       //this.dataSource.paginator = value;
        this.paginato=value
-       //this.dataSource.data = this.fireList;
     }}
-  //  @ViewChild(MatPaginator, {static: true}) paginato: MatPaginator;
 
   popcopy(uid: string) {
     this.dialog.open(PopupcopyComponent, {

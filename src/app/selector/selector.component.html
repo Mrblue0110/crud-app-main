@@ -40,8 +40,6 @@
     </div>
     <div *ngIf="genT">
         <mat-card class="tab">
-            <mat-card-header></mat-card-header>
-            <mat-card-content>
                 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                     <ng-container matColumnDef="Cars">
                         <th mat-header-cell *matHeaderCellDef>Cars</th>
@@ -68,7 +66,6 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns:displayedColumns;"></tr>
                 </table>
-            </mat-card-content>
             <mat-card-footer><mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
                 [pageSizeOptions]="[5,10]" showFirstLastButtons></mat-paginator></mat-card-footer>
         </mat-card>
@@ -98,6 +95,6 @@
 
 
 
-<div *ngIf="isLoading()" class="loading-indicator" fxLayoutAlign="center center" fxFlexFill>
+<div *ngIf="isLoading()" class="loading-indicator" fxLayoutAlign="center center"  fxFlexFill>
     <mat-spinner color="warm" diameter="80"></mat-spinner>
 </div>
