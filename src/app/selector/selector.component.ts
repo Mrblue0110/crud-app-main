@@ -8,6 +8,8 @@ import { PopupcopyComponent } from '../popupcopy/popupcopy.component';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 
@@ -55,19 +57,13 @@ export class SelectorComponent implements OnInit {
   querySnapshot: any;
   fireList: fireData[] = [];
   paginato: any;
-  // rows: any[] = [];
   displayedColumns: string[] = ["Cars", "Start Date", "End Date","Action"];
-  // @ViewChild('mydatatable') mydatatable: any;
   dataSource: any;
-  genT: boolean = false;
-  constructor(//private matPaginator: MatPaginator, 
-              public authService: AuthServiceService,
+  constructor(public authService: AuthServiceService,
               private dialog: MatDialog,
               private firestore: Firestore, 
-              private router: Router) {
-                // this.paginator = this.matPaginator;
-                // this.setupPaginator();  
-  }
+              private toastr: ToastrService,
+              private router: Router) {}
   ngOnInit() {
 
     this.initForm();
@@ -90,6 +86,10 @@ export class SelectorComponent implements OnInit {
   onSubmit(formData) {
     if (formData.sel != "") {
       if (formData.fdate && formData.ldate) {
+        if(formData.fdate>formData.ldate){
+          this.alert = true
+          this.masage = "End date can't be before start date"
+        }else{
         this.alert = false
         var mypopup = this.dialog.open(PopupComponent, {
           width: '400px',
@@ -122,7 +122,6 @@ export class SelectorComponent implements OnInit {
             }
             this.authService.linkdata = thislink
             const collectionInstance = collection(this.firestore, 'Links');
-            this.genT=false;
             this.authService.start();
             addDoc(collectionInstance, thislink,).then((docRef) => {
               this.Uid = docRef.id;
@@ -137,6 +136,7 @@ export class SelectorComponent implements OnInit {
           }
         })
       }
+    }
       else {
         this.alert = true
         this.masage = "Enter a start and end date"
@@ -170,7 +170,6 @@ export class SelectorComponent implements OnInit {
   async getData() {
     const queryInstance = query(collection(this.firestore, 'Links'), where('Email', '==', this.authService.emailStore),orderBy("CreatedDate","desc"));
     this.querySnapshot = await getDocs(queryInstance);
-    // this.dataSource = null;
     this.fireList = [];
     this.querySnapshot.forEach((document: any) => {
       const data = document.data() as fireData;
@@ -183,20 +182,17 @@ export class SelectorComponent implements OnInit {
           CreatedDate: data.CreatedDate
         };
         this.fireList.push(mappedData);
-        this.genT = true
-        this.initDataSource();
-      } else {
-        this.genT = false
-      }
+        
+      } 
     });
-    // this.uptable();
+    this.initDataSource();
    
   }
 
   @ViewChild(MatPaginator)
   set paginator(value: MatPaginator) {
     if(value!=undefined){
-       //this.dataSource.paginator = value;
+      //  this.dataSource.paginator = value;
        this.paginato=value
     }}
 
@@ -210,29 +206,23 @@ export class SelectorComponent implements OnInit {
     })
   }
   initDataSource() {
-    if (this.fireList.length > 0) {
+
       this.dataSource = new MatTableDataSource<fireData>()
-    }
-    this.dataSource.data = this.fireList;
+    if(this.fireList.length=0){
+      this.dataSource.data="No link was created"
+    }else{  
+    this.dataSource.data = this.fireList;}
     this.dataSource.paginator=this.paginato
   }
   async deleteLink(id:string){
      const docInstance = doc(this.firestore,'Links',id);
      await deleteDoc(docInstance).then(()=>{
+      this.toastr.success("Link was deleted succesfully","", {
+        timeOut:1000,
+        positionClass: "toast-bottom-center",
+      });
       this.getData();
     })
 
   }
-  // uptable(){
-  //   this.rows = [...this.fireList];
-  //   this.mydatatable.recalculate();
-  // }
-  // setupPaginator(): void {
-  //   // Check if the paginator is defined
-  //   if (this.paginator) {
-  //     // Perform any setup or configuration you need here
-  //     this.paginator.pageSize = 10;
-  //     this.paginator.pageSizeOptions = [5, 10, 20];
-  //   }
-  // }
 }

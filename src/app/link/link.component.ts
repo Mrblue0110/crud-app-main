@@ -22,7 +22,8 @@ export class LinkComponent implements OnInit{
    EndDate:Date|undefined
    currentdate:Date=new Date;
    safeIframe:SafeUrl | undefined
-   iframe='//live.bngtracking.ro/pro/applications/locator/?key=ffa242d27b72c18e6e3dc6dff0d52439&objects=IDgoseHere&map=roadmap'
+   key:string=""
+   iframe='//live.bngtracking.ro/pro/applications/locator/?key=KEYgoseHere&objects=IDgoseHere&map=roadmap'
   constructor(private route: ActivatedRoute,private firestore:Firestore,private router: Router,protected sanitizer: DomSanitizer){}
    async ngOnInit() {
       this.id= this.route.snapshot.params['id']
@@ -31,6 +32,7 @@ export class LinkComponent implements OnInit{
       this.Labels =this.docSnap.data()?.['PlateLabel']
       this.StartDate=this.docSnap.data()?.['StartDate'].toDate()
       this.EndDate=this.docSnap.data()?.['EndDate'].toDate()
+      this.key=this.docSnap.data()?.['Key']
      if(!this.docSnap.data()|| this.docSnap.data()?.['StartDate'].toDate() > this.currentdate || this.docSnap.data()?.['EndDate'].toDate() < this.currentdate){
         this.router.navigate(['/notfound',this.id])
      }else{this.canSee=true
@@ -39,6 +41,7 @@ export class LinkComponent implements OnInit{
       })
       this.Plates=this.Plates.slice(0,-1);
       this.iframe=this.iframe.replace('IDgoseHere',this.Plates);
+      this.iframe=this.iframe.replace('KEYgoseHere',this.key);
       this.safeIframe=this.sanitizer.bypassSecurityTrustResourceUrl(this.iframe);
       console.log(this.safeIframe)
       console.log(this.iframe)

@@ -1,14 +1,23 @@
 <div mat-dialog-actions>
-<button class="close" mat-button (click)="close()">X</button>
+    <button class="close" mat-button (click)="close()">X</button>
 </div>
 <div mat-dialog-title class="title" fxLayoutAlign="center start">
     <label for="clipboard-example-textarea">The link was generated</label>
 </div>
 
-<div mat-dialog-content fxLayoutAlign="center center" fxLayout="column" class="title">
+<!-- <div mat-dialog-content fxLayoutAlign="center center" fxLayout="column" class="title">
 <textarea id="clipboard-example-textarea"[(ngModel)]="baseUrl"></textarea>
 </div>
 <div fxLayoutAlign="center center" >
 <button mat-raised-button color="primary" [cdkCopyToClipboard]="baseUrl">Copy to clipboard</button>
-</div>
+</div> -->
+<div mat-dialog-content fxLayoutAlign="center center" fxLayout="column" class="title">
 
+
+    <form>
+        <mat-form-field>
+            <input matInput [value]="baseUrl">
+            <button mat-icon-button matSuffix (click)="tostmes()" color="primary" [cdkCopyToClipboard]="baseUrl"><mat-icon>content_copy</mat-icon></button>
+        </mat-form-field>
+    </form>
+</div>

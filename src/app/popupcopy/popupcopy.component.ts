@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AuthServiceService } from '../auth-service.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-popupcopy',
   templateUrl: './popupcopy.component.html',
@@ -13,7 +15,7 @@ export class PopupcopyComponent implements OnInit  {
   linkVal:string="link/"
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data:any,@Inject(DOCUMENT)private document:Document,public authService: AuthServiceService, private refcopy: MatDialogRef<PopupcopyComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data:any,@Inject(DOCUMENT)private document:Document,private toastr: ToastrService,public authService: AuthServiceService, private refcopy: MatDialogRef<PopupcopyComponent>) { }
   ngOnInit(): void {
     this.baseUrl=this.document.location.href;
     this.baseUrl=this.baseUrl.slice(0,-7);
@@ -24,5 +26,10 @@ export class PopupcopyComponent implements OnInit  {
 
   close() {
     this.refcopy.close()
+  }
+  tostmes(){
+    this.toastr.success("Link was copied succesfully","", {
+      positionClass: "toast-bottom-center",
+    });
   }
 }

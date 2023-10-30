@@ -24,6 +24,7 @@ export class AuthServiceService {
   loading:number=0;
   emailStore:string="";
   Linkuid:string="";
+  key:string="d73e1137ffa5f81953e9c9f0f9f8b491"
   linkdata:LinkData={
     Email:"",
     EndDate:"",
@@ -38,6 +39,9 @@ export class AuthServiceService {
   }
   load(data:Object):Observable<any>{
     return this.http.post('https://api.navixy.com/v2/tracker/list',data)
+  }
+  getKey(data:any):Observable<any>{
+    return this.http.post('https://live.bngtracking.ro/api-v2/user/session/weblocator/',data)
   }
   start(){
     this.loading ++;

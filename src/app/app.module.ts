@@ -21,8 +21,6 @@ import { AuthServiceService } from './auth-service.service';
 import { NgFor } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
-// import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-// import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -40,6 +38,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
+import { ToastrModule } from 'ngx-toastr';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
@@ -59,6 +59,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     MatCardModule,
     MatButtonModule,
     FlexLayoutModule,
@@ -77,9 +78,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     MatDatepickerModule,
     MatDatetimepickerModule,
     MatNativeDateModule,
-    // NgxMaterialTimepickerModule,
-    // NgxMatDatetimePickerModule,
-    // NgxMatTimepickerModule,
     MatMomentDatetimeModule,
     MatDialogModule,
     CommonModule,
@@ -91,7 +89,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     MatPaginatorModule,
     MatSortModule,
     MatGridListModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    MatIconModule
   ],
   providers: [AuthServiceService],
   bootstrap: [AppComponent]
