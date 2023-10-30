@@ -29,6 +29,7 @@ export class PopupcopyComponent implements OnInit  {
   }
   tostmes(){
     this.toastr.success("Link was copied succesfully","", {
+      timeOut:1000,
       positionClass: "toast-bottom-center",
     });
   }

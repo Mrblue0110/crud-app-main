@@ -62,6 +62,13 @@
                             <button mat-icon-button (click)="deleteLink(element.DocumentId)" style="color:rgb(218, 39, 15);"><mat-icon>delete</mat-icon></button>
                         </td>
                     </ng-container>
+                    <ng-container>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="tabmes" [attr.colspan]="displayedColumns.length">
+                              No links found.
+                            </td>
+                          </tr>
+                    </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns:displayedColumns;"></tr>

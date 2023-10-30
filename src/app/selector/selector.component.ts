@@ -21,6 +21,7 @@ interface LinkData {
   PlateLabel: Array<string>;
   StartDate: string;
   CreatedDate:Timestamp;
+  Key:string;
 }
 interface fireData {
   EndDate?: Date;
@@ -118,7 +119,8 @@ export class SelectorComponent implements OnInit {
               PlateId: this.CarId,
               PlateLabel: this.CarLabel,
               StartDate: formData.fdate._d,
-              CreatedDate: this.createDate
+              CreatedDate: this.createDate,
+              Key:this.authService.key
             }
             this.authService.linkdata = thislink
             const collectionInstance = collection(this.firestore, 'Links');
@@ -208,10 +210,7 @@ export class SelectorComponent implements OnInit {
   initDataSource() {
 
       this.dataSource = new MatTableDataSource<fireData>()
-    if(this.fireList.length=0){
-      this.dataSource.data="No link was created"
-    }else{  
-    this.dataSource.data = this.fireList;}
+    this.dataSource.data = this.fireList;
     this.dataSource.paginator=this.paginato
   }
   async deleteLink(id:string){

@@ -30,6 +30,8 @@ export class NotfoundComponent implements OnInit {
         }
         else if(this.docSnap.data()?.['EndDate'].toDate() < this.currentdate){
           this.expLink=true
+        }else{
+          this.router.navigate(['/link',this.id])
         }
       }
 
