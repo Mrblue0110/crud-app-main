@@ -1,6 +1,8 @@
-<div fxLayoutAlign="center center" fxFlexFill class="main-div" >
+<div fxLayoutAlign="center center" fxFlexFill fxLayout="column" class="main-div"  >
+
+  <img src="assets/bnglogoprimslim.png"  width="300" class="imgmar">
   <mat-card fxFlexAlign="center" class="sclas">
-      <mat-toolbar color="primary">Login Page</mat-toolbar>
+      <mat-toolbar style="background-color:rgb(34,42,69);color:white;">Login Page</mat-toolbar>
       <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="formGroup"  (ngSubmit)='onSubmit(formGroup.value)'>
           <mat-form-field >
             <input matInput placeholder="User Name" formControlName="login" >
@@ -9,7 +11,7 @@
           <mat-form-field >
               <input matInput type="password" placeholder="Password" formControlName="password" >
             </mat-form-field>
-            <button mat-raised-button class="login-form" color="primary" type="submit">Login</button>
+            <button mat-raised-button class="login-form" style="background-color:rgb(34,42,69);color:white;" type="submit">Login</button>
             <div class="padalert" *ngIf="wrong">
               <h2>*{{masage}}</h2>
           </div>

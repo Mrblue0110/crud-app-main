@@ -39,5 +39,16 @@
     size: 200% ;
     font-weight: bold;
 }
+@media (min-width:700px) {
+.imgmar{
+    margin-left:65%;
+
+}
+}
+@media (max-width:700px) {
+    .imgmar{
+    margin-left: 15%;
+    }
+}
 
 

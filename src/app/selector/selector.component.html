@@ -1,7 +1,7 @@
 <div fxLayoutAlign="center center" fxLayout="column">
     <div class="main-div">
         <mat-card fxFlexAlign="center" style="padding:10px;" class="sclas">
-            <mat-toolbar color="primary">Link Generator</mat-toolbar>
+            <mat-toolbar style="background-color:rgb(34,42,69);color:white;">Link Generator <img src="assets/bnglogowithe.png" width="100" height="100" class="imgmar"></mat-toolbar>
             <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="selectForm"
                 (ngSubmit)='onSubmit(selectForm.value)'>
                 <h2>Select Vehicle</h2>
@@ -31,7 +31,7 @@
                     <input id="inputend" matInput formControlName="ldate" [min]="mindate" placeholder="End Date"
                         [matDatetimepicker]="datetimePicker2" required autocomplete="false" [hidden]="valed">
                 </mat-form-field>
-                <button mat-raised-button color="primary" type="submit">Generate Link</button>
+                <button mat-raised-button style="background-color:rgb(34,42,69);color:white;" type="submit">Generate Link</button>
                 <div class="padalert" *ngIf="alert">
                     <h2>*{{masage}}</h2>
                 </div>
@@ -58,7 +58,7 @@
                     <ng-container matColumnDef="Action">
                         <th mat-header-cell *matHeaderCellDef>Action</th>
                         <td mat-cell *matCellDef="let element" fxLayout="row">
-                            <button mat-icon-button (click)="popcopy(element.DocumentId)" color="primary"><mat-icon>content_copy</mat-icon></button>
+                            <button mat-icon-button (click)="popcopy(element.DocumentId)" style="color:rgb(34,42,69);"><mat-icon>content_copy</mat-icon></button>
                             <button mat-icon-button (click)="deleteLink(element.DocumentId)" style="color:rgb(218, 39, 15);"><mat-icon>delete</mat-icon></button>
                         </td>
                     </ng-container>
