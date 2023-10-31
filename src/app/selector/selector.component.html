@@ -65,11 +65,11 @@
                     <ng-container *ngIf="!mobile" matColumnDef="Data">
                         <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
                         <mat-cell *matCellDef="let element" fxLayout="column">
-                            <span class="mobile-label">Cars:</span>
+                            <span *ngIf="!mobile">Cars:</span>
                             {{element.PlateLabel}}
-                            <span class="mobile-label">Start Date:</span>
+                            <span *ngIf="!mobile">Start Date:</span>
                             {{element.StartDate.toDate() | date:'d/MMM/yy, h:mm a' }}
-                            <span class="mobile-label">End Date:</span>
+                            <span *ngIf="!mobile">End Date:</span>
                             {{element.EndDate.toDate() | date:'d/MMM/yy, h:mm a' }}
                         </mat-cell>
                     </ng-container>
