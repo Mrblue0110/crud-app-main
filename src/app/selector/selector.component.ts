@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, LOCALE_ID, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, LOCALE_ID, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { AuthServiceService } from '../auth-service.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -192,7 +192,17 @@ export class SelectorComponent implements OnInit {
     this.initDataSource();
    
   }
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    if (window.screen.width <= 700) { // 768px portrait
+      this.mobile = false;
+      this.displayedColumns=["Data","Action"]
+    }else{
+      this.displayedColumns= ["Cars", "Start Date", "End Date","Action"];
+      this.mobile=true;
+    }
 
+  }
   @ViewChild(MatPaginator)
   set paginator(value: MatPaginator) {
     if(value!=undefined){
