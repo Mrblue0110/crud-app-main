@@ -44,21 +44,18 @@
                     <ng-container *ngIf="mobile" matColumnDef="Cars">
                         <mat-header-cell  *matHeaderCellDef>Cars</mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            <span class="mobile-label">Cars:</span>
                             {{element.PlateLabel}}
                         </mat-cell>
                     </ng-container>
                     <ng-container *ngIf="mobile" matColumnDef="Start Date">
                         <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            <span class="mobile-label">Start Date:</span>
                             {{element.StartDate.toDate() | date:'d/MMM/yy, h:mm a' }}
                         </mat-cell>
                     </ng-container>
                     <ng-container *ngIf="mobile" matColumnDef="End Date">
                         <mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            <span class="mobile-label">End Date:</span>
                             {{element.EndDate.toDate() | date:'d/MMM/yy, h:mm a' }}
                         </mat-cell>
                     </ng-container>
