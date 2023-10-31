@@ -45,7 +45,9 @@ export class LoginComponent implements OnInit {
       }
       if(this.formGroup.valid){
         this.wrong=false
-        this.dialog.open(PopsinerComponent)
+        this.dialog.open(PopsinerComponent,{
+          disableClose: true,
+        })
         this.authService.login(post).subscribe({
           next: async result => {
             if(result.success){

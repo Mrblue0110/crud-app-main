@@ -129,7 +129,9 @@ export class SelectorComponent implements OnInit {
             }
             this.authService.linkdata = thislink
             const collectionInstance = collection(this.firestore, 'Links');
-            this.dialog.open(PopsinerComponent)
+            this.dialog.open(PopsinerComponent,{
+              disableClose: true,
+            })
             addDoc(collectionInstance, thislink,).then((docRef) => {
               this.Uid = docRef.id;
               this.authService.Linkuid = this.Uid;
