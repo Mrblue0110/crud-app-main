@@ -61,13 +61,17 @@ export class SelectorComponent implements OnInit {
   paginato: any;
   displayedColumns: string[] = ["Cars", "Start Date", "End Date","Action"];
   dataSource: any;
+  mobile:boolean=true;
   constructor(public authService: AuthServiceService,
               private dialog: MatDialog,
               private firestore: Firestore, 
               private toastr: ToastrService,
               private router: Router) {}
   ngOnInit() {
-
+    if (window.screen.width <= 700) { // 768px portrait
+      this.mobile = false;
+      this.displayedColumns=["Data","Action"]
+    }
     this.initForm();
     if (!this.authService.myData) {
       this.router.navigate([''])

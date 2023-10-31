@@ -41,18 +41,36 @@
     <div>
         <mat-card class="tab">
                 <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                    <ng-container matColumnDef="Cars">
-                        <mat-header-cell *matHeaderCellDef>Cars</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.PlateLabel}}</mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="Start Date">
-                        <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.StartDate.toDate() | date:'d/MMM/yy, h:mm a' }}
+                    <ng-container *ngIf="mobile" matColumnDef="Cars">
+                        <mat-header-cell  *matHeaderCellDef>Cars</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <span class="mobile-label">Cars:</span>
+                            {{element.PlateLabel}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="End Date">
+                    <ng-container *ngIf="mobile" matColumnDef="Start Date">
+                        <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <span class="mobile-label">Start Date:</span>
+                            {{element.StartDate.toDate() | date:'d/MMM/yy, h:mm a' }}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container *ngIf="mobile" matColumnDef="End Date">
                         <mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.EndDate.toDate() | date:'d/MMM/yy, h:mm a' }}
+                        <mat-cell *matCellDef="let element">
+                            <span class="mobile-label">End Date:</span>
+                            {{element.EndDate.toDate() | date:'d/MMM/yy, h:mm a' }}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container *ngIf="!mobile" matColumnDef="Data">
+                        <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+                        <mat-cell *matCellDef="let element" fxLayout="column">
+                            <span class="mobile-label">Cars:</span>
+                            {{element.PlateLabel}}
+                            <span class="mobile-label">Start Date:</span>
+                            {{element.StartDate.toDate() | date:'d/MMM/yy, h:mm a' }}
+                            <span class="mobile-label">End Date:</span>
+                            {{element.EndDate.toDate() | date:'d/MMM/yy, h:mm a' }}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="Action">
