@@ -1,5 +1,5 @@
 <div fxLayoutAlign="center center" fxLayout="column">
-    <div *ngIf="!isLoading()" class="main-div">
+    <div class="main-div">
         <mat-card fxFlexAlign="center" style="padding:10px;" class="sclas">
             <mat-toolbar color="primary">Link Generator</mat-toolbar>
             <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="selectForm"
@@ -77,6 +77,3 @@
                 [pageSizeOptions]="[5,10]" showFirstLastButtons></mat-paginator></mat-card-footer>
         </mat-card>
     </div>
-<div *ngIf="isLoading()" class="loading-indicator" fxLayoutAlign="center center"  fxFlexFill>
-    <mat-spinner color="warm" diameter="80"></mat-spinner>
-</div>

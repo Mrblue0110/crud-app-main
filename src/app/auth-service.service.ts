@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 /*OBJECTS*/
 
@@ -19,12 +20,12 @@ interface LinkData{
 })
 export class AuthServiceService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private firestore:Firestore) { }
   myData:any;
   loading:number=0;
   emailStore:string="";
   Linkuid:string="";
-  key:string="d73e1137ffa5f81953e9c9f0f9f8b491"
+  key:string=""
   linkdata:LinkData={
     Email:"",
     EndDate:"",
@@ -32,7 +33,9 @@ export class AuthServiceService {
     PlateLabel:[],
     StartDate:"",
   };
-    
+  siteUrl:string='BASEURL/api-v2/user/session/weblocator/read'
+  
+  querySnapshot:any
 
   login(data: any):Observable<any>{
     return this.http.post('https://api.navixy.com/v2/user/auth',data)
@@ -41,15 +44,10 @@ export class AuthServiceService {
     return this.http.post('https://api.navixy.com/v2/tracker/list',data)
   }
   getKey(data:any):Observable<any>{
-    return this.http.post('https://live.bngtracking.ro/api-v2/user/session/weblocator/',data)
+    return this.http.post(this.siteUrl,data)
+    
   }
-  start(){
-    this.loading ++;
-  }
-  stop(){
-    this.loading --;
-  }
-  isloading(){
-    return this.loading > 0;
+  async setlink(site:string){
+    this.siteUrl=this.siteUrl.replace('BASEURL',site);
   }
 }

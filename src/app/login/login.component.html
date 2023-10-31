@@ -1,4 +1,4 @@
-<div *ngIf="!isLoading()" fxLayoutAlign="center center" fxFlexFill class="main-div" >
+<div fxLayoutAlign="center center" fxFlexFill class="main-div" >
   <mat-card fxFlexAlign="center" class="sclas">
       <mat-toolbar color="primary">Login Page</mat-toolbar>
       <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="formGroup"  (ngSubmit)='onSubmit(formGroup.value)'>
@@ -16,8 +16,4 @@
         </form>
        
   </mat-card>
-</div>
-
-<div *ngIf="isLoading()"  fxLayoutAlign="center center" fxFlexFill>
-<mat-spinner color="warm" diameter="80" ></mat-spinner>
 </div>

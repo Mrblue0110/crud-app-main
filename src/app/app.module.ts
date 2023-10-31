@@ -42,6 +42,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { ToastrModule } from 'ngx-toastr';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { PopsinerComponent } from './popsiner/popsiner.component';
 
 
 
@@ -53,7 +54,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     PopupComponent,
     PopupcopyComponent,
     LinkComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    PopsinerComponent
   ],
   imports: [
     BrowserModule,

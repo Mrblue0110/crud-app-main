@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
+import { PopsinerComponent } from '../popsiner/popsiner.component';
 
 
 
@@ -124,13 +125,13 @@ export class SelectorComponent implements OnInit {
             }
             this.authService.linkdata = thislink
             const collectionInstance = collection(this.firestore, 'Links');
-            this.authService.start();
+            this.dialog.open(PopsinerComponent)
             addDoc(collectionInstance, thislink,).then((docRef) => {
               this.Uid = docRef.id;
               this.authService.Linkuid = this.Uid;
               if (this.Uid) {
                 this.getData();
-                this.authService.stop();
+                this.dialog.closeAll();
               }
               this.popcopy(this.Uid);
             })
@@ -165,9 +166,6 @@ export class SelectorComponent implements OnInit {
       this.valed = false
     }
     this.mindate = this.selectForm.value.fdate._d
-  }
-  isLoading() {
-    return this.authService.isloading();
   }
   async getData() {
     const queryInstance = query(collection(this.firestore, 'Links'), where('Email', '==', this.authService.emailStore),orderBy("CreatedDate","desc"));

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DocumentSnapshot, Firestore,Timestamp,doc,getDoc } from '@angular/fire/firestore';
+import { DocumentSnapshot, Firestore,Timestamp,collection,doc,getDoc, getDocs, query, where } from '@angular/fire/firestore';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 
@@ -14,16 +14,20 @@ export class LinkComponent implements OnInit{
    id: string=''; 
    collPath:string='Links';
    Plateid:Array<String>=[];
-   docSnap:DocumentSnapshot | undefined
+   docSnap:DocumentSnapshot 
    canSee:boolean=false
-   Plates:string=""
+   Plates:string="";
    Labels:Array<String>=[];
-   StartDate:Date|undefined
-   EndDate:Date|undefined
+   StartDate:Date
+   EndDate:Date
    currentdate:Date=new Date;
-   safeIframe:SafeUrl | undefined
-   key:string=""
-   iframe='//live.bngtracking.ro/pro/applications/locator/?key=KEYgoseHere&objects=IDgoseHere&map=roadmap'
+   safeIframe:SafeUrl 
+   linkEmail:string;
+   querySnapshot:any
+   baseUrl:string
+   key:string;
+   diff:any;
+   iframe='BASEURL/pro/applications/locator/?key=KEY&objects=ID&map=roadmap'
   constructor(private route: ActivatedRoute,private firestore:Firestore,private router: Router,protected sanitizer: DomSanitizer){}
    async ngOnInit() {
       this.id= this.route.snapshot.params['id']
@@ -33,6 +37,7 @@ export class LinkComponent implements OnInit{
       this.StartDate=this.docSnap.data()?.['StartDate'].toDate()
       this.EndDate=this.docSnap.data()?.['EndDate'].toDate()
       this.key=this.docSnap.data()?.['Key']
+      this.linkEmail=this.docSnap.data()?.['Email']
      if(!this.docSnap.data()|| this.docSnap.data()?.['StartDate'].toDate() > this.currentdate || this.docSnap.data()?.['EndDate'].toDate() < this.currentdate){
         this.router.navigate(['/notfound',this.id])
      }else{this.canSee=true
@@ -40,12 +45,23 @@ export class LinkComponent implements OnInit{
          this.Plates+=str+','
       })
       this.Plates=this.Plates.slice(0,-1);
-      this.iframe=this.iframe.replace('IDgoseHere',this.Plates);
-      this.iframe=this.iframe.replace('KEYgoseHere',this.key);
+      const queryInstance = query(collection(this.firestore, 'UserKeys'), where('Email', '==',this.linkEmail));
+      this.querySnapshot = await getDocs(queryInstance);
+      this.querySnapshot.forEach((document: any) => {
+          this.baseUrl=document.data()?.['BaseUrl']
+      })
+      this.iframe=this.iframe.replace('BASEURL',this.baseUrl);
+      this.iframe=this.iframe.replace('ID',this.Plates);
+      this.iframe=this.iframe.replace('KEY',this.key);
       this.safeIframe=this.sanitizer.bypassSecurityTrustResourceUrl(this.iframe);
-      console.log(this.safeIframe)
-      console.log(this.iframe)
-     }
+       this.diff=this.EndDate.getTime()-this.currentdate.getTime()
+       if(this.diff<86400000){
+       this.delayAction(()=>{
+         this.router.navigate(['/notfound',this.id])
+       },this.diff)
+     }}
     }
-
+    delayAction(action: () => void, milliseconds: number): void {
+      setTimeout(action, milliseconds); // Specify the delay in milliseconds
+    }
 }
