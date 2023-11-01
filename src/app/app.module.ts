@@ -40,9 +40,8 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
 import { ToastrModule } from 'ngx-toastr';
-
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PopsinerComponent } from './popsiner/popsiner.component';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -91,10 +90,10 @@ import { PopsinerComponent } from './popsiner/popsiner.component';
     MatPaginatorModule,
     MatSortModule,
     MatGridListModule,
-    NgxDatatableModule,
-    MatIconModule
+    MatIconModule,
+    DatePipe
   ],
-  providers: [AuthServiceService],
+  providers: [AuthServiceService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

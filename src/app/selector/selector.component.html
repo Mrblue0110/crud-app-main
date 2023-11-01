@@ -1,4 +1,4 @@
-<div fxLayoutAlign="center center" fxLayout="column">
+<div fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="20px">
     <div class="main-div">
         <mat-card fxFlexAlign="center" style="padding:10px;" class="sclas">
             <mat-toolbar style="background-color:rgb(34,42,69);color:white;">Link Generator <img src="assets/bnglogowithe.png" width="100" height="100" class="imgmar"></mat-toolbar>
@@ -40,6 +40,13 @@
     </div>
     <div>
         <mat-card class="tab">
+            <div>
+            <mat-toolbar fxFlexAlign="center">
+            <mat-form-field class="tabser">
+                <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search" class="tabser" >
+            </mat-form-field>
+        </mat-toolbar>
+    </div>
                 <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                     <ng-container *ngIf="mobile" matColumnDef="Cars">
                         <mat-header-cell  *matHeaderCellDef>Cars</mat-header-cell>
@@ -47,16 +54,16 @@
                             {{element.PlateLabel}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container *ngIf="mobile" matColumnDef="Start Date">
-                        <mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>
+                    <ng-container *ngIf="mobile" matColumnDef="Start Date" >
+                        <mat-header-cell *matHeaderCellDef >Start Date</mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            {{element.StartDate.toDate() | date:'d/MMM/yy, h:mm a' }}
+                            {{element.StartDate}}
                         </mat-cell>
                     </ng-container>
                     <ng-container *ngIf="mobile" matColumnDef="End Date">
                         <mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            {{element.EndDate.toDate() | date:'d/MMM/yy, h:mm a' }}
+                            {{element.EndDate }}
                         </mat-cell>
                     </ng-container>
                     <ng-container *ngIf="!mobile" matColumnDef="Data">
@@ -65,9 +72,9 @@
                             <span *ngIf="!mobile">Cars:</span>
                             {{element.PlateLabel}}
                             <span *ngIf="!mobile">Start Date:</span>
-                            {{element.StartDate.toDate() | date:'d/MMM/yy, h:mm a' }}
+                            {{element.StartDate}}
                             <span *ngIf="!mobile">End Date:</span>
-                            {{element.EndDate.toDate() | date:'d/MMM/yy, h:mm a' }}
+                            {{element.EndDate}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="Action">

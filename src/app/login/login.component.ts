@@ -57,9 +57,20 @@ export class LoginComponent implements OnInit {
                 this.site=document.data()?.['BaseUrl']
                  })
               this.authService.setlink(this.site)
-              this.authService.getKey(result).subscribe(rez=>{
-               this.authService.key=rez.value;
+              this.authService.getKey(result).subscribe({
+                next: rez=>{
+               this.authService.key=rez.value;},
+               error:(er)=>{
+              this.authService.createKey(result).subscribe({
+                next:createRez=>{
+                this.authService.key=createRez.value;
+              console.log('creation succesful')},
+                error:(er)=>{
+                    console.log(er)
+                }
               })
+               }
+              }) 
               this.authService.load(result).subscribe(data=>{
                 if(data){
                 this.authService.myData = data ;

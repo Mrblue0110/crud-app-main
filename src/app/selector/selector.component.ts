@@ -10,6 +10,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { PopsinerComponent } from '../popsiner/popsiner.component';
+import { DatePipe } from '@angular/common';
+
 
 
 
@@ -25,12 +27,19 @@ interface LinkData {
   Key:string;
 }
 interface fireData {
-  EndDate?: Date;
+  EndDate:string;
   PlateLabel?: Array<string>;
-  StartDate?: Date;
+  StartDate:string;
   CreatedDate?:Timestamp;
   DocumentId?: string;
 
+}
+interface mapData {
+  EndDate: Timestamp;
+  PlateLabel?: Array<string>;
+  StartDate: Timestamp;
+  CreatedDate?:Timestamp;
+  DocumentId?: string;
 }
 interface Plates {
   id: string;
@@ -66,7 +75,8 @@ export class SelectorComponent implements OnInit {
               private dialog: MatDialog,
               private firestore: Firestore, 
               private toastr: ToastrService,
-              private router: Router) {}
+              private router: Router,
+              private datepipe:DatePipe) {}
   ngOnInit() {
     if (window.screen.width <= 700) { // 768px portrait
       this.mobile = false;
@@ -178,21 +188,21 @@ export class SelectorComponent implements OnInit {
     this.querySnapshot = await getDocs(queryInstance);
     this.fireList = [];
     this.querySnapshot.forEach((document: any) => {
-      const data = document.data() as fireData;
+      const data = document.data() as mapData;
       if (data) {
+    const startDate=this.datepipe.transform(data.StartDate.toDate(),'d/MMM/yy, h:mm a');  
+    const endDate=this.datepipe.transform(data.EndDate.toDate(),'d/MMM/yy, h:mm a');  
         const mappedData = {
-          StartDate: data.StartDate,
-          EndDate: data.EndDate,
+          StartDate: startDate||'',
+          EndDate: endDate||'',
           PlateLabel: data.PlateLabel,
           DocumentId: document.id,
           CreatedDate: data.CreatedDate
         };
         this.fireList.push(mappedData);
-        
       } 
     });
     this.initDataSource();
-   
   }
   @HostListener('window:resize', ['$event'])
   onWindowResize() {
@@ -205,6 +215,7 @@ export class SelectorComponent implements OnInit {
     }
 
   }
+  
   @ViewChild(MatPaginator)
   set paginator(value: MatPaginator) {
     if(value!=undefined){
@@ -225,7 +236,8 @@ export class SelectorComponent implements OnInit {
 
       this.dataSource = new MatTableDataSource<fireData>()
     this.dataSource.data = this.fireList;
-    this.dataSource.paginator=this.paginato
+    this.dataSource.paginator=this.paginato;
+    
   }
   async deleteLink(id:string){
      const docInstance = doc(this.firestore,'Links',id);
@@ -237,5 +249,8 @@ export class SelectorComponent implements OnInit {
       this.getData();
     })
 
+  }
+  applyFilter(filterValue:string){
+    this.dataSource.filter=filterValue.trim().toLocaleLowerCase()
   }
 }

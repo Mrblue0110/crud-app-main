@@ -34,8 +34,8 @@ export class AuthServiceService {
     StartDate:"",
   };
   siteUrl:string='BASEURL/api-v2/user/session/weblocator/read'
-  
-  querySnapshot:any
+  siteUrlcreate:string='BASEURL/api-v2/user/session/weblocator/create'
+  site:string;
 
   login(data: any):Observable<any>{
     return this.http.post('https://api.navixy.com/v2/user/auth',data)
@@ -47,7 +47,13 @@ export class AuthServiceService {
     return this.http.post(this.siteUrl,data)
     
   }
+  createKey(data:any):Observable<any>{
+    this.siteUrlcreate=this.siteUrlcreate.replace('BASEURL',this.site);
+    return this.http.post(this.siteUrlcreate,data)
+    
+  }
   async setlink(site:string){
     this.siteUrl=this.siteUrl.replace('BASEURL',site);
+    this.site=site
   }
 }
