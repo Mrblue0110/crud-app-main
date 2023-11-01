@@ -3,6 +3,43 @@
     margin:10%;
     margin-bottom:50px; ;
     font-size: 250% ;
-    
  }
+ 
+ @media (min-width:700px) {
+    .dnex{
+        width:500px;
+     }
+    
+    }
+    @media (max-width:700px) {
+        .dnex{
+            width:300px;
+           
+         }
+    }
+    @media (min-width:700px) {
+        .weait{
+            width:500px;
+            
+         }
+        
+        }
+        @media (max-width:700px) {
+            .weait{
+                width:300px;
+             }
+        }
+        @media (min-width:700px) {
+            .exp{
+                width:500px;
+             }
+            
+            }
+            @media (max-width:700px) {
+                .exp{
+                    width:300px;
+                   
+                 }
+            }
+    
  
