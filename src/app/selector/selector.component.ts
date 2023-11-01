@@ -190,12 +190,17 @@ export class SelectorComponent implements OnInit {
     this.querySnapshot.forEach((document: any) => {
       const data = document.data() as mapData;
       if (data) {
-    const startDate=this.datepipe.transform(data.StartDate.toDate(),'d/MMM/yy, h:mm a');  
-    const endDate=this.datepipe.transform(data.EndDate.toDate(),'d/MMM/yy, h:mm a');  
+    const startDate=this.datepipe.transform(data.StartDate.toDate(),'d.MMM.yy, h:mm a');  
+    const endDate=this.datepipe.transform(data.EndDate.toDate(),'d.MMM.yy, h:mm a');  
+    const trimPlate:Array<string>=[]
+    data.PlateLabel?.forEach((elm)=>{
+      elm=elm.trim().replace(/\s/g,'')
+      trimPlate.push(elm)
+    })
         const mappedData = {
           StartDate: startDate||'',
           EndDate: endDate||'',
-          PlateLabel: data.PlateLabel,
+          PlateLabel:trimPlate,
           DocumentId: document.id,
           CreatedDate: data.CreatedDate
         };
