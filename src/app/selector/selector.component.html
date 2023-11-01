@@ -41,7 +41,7 @@
     <div>
         <mat-card class="tab">
             <mat-form-field class="tabser" fxFlexAlign="center">
-                <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search" class="tabser" >
+                <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search" class="tabser" fxFlexAlign="center">
             </mat-form-field>
                 <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                     <ng-container *ngIf="mobile" matColumnDef="Cars">
