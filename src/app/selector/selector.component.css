@@ -49,13 +49,13 @@
 }
 @media (min-width:700px) {
 .imgmar{
-    margin-left:65%;
+    margin-left:67%;
 
 }
 }
 @media (max-width:700px) {
     .imgmar{
-    margin-left: 15%;
+    margin-left: 25%;
     }
 }
 
