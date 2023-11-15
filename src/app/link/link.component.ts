@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DocumentSnapshot, Firestore,Timestamp,collection,doc,getDoc, getDocs, query, where } from '@angular/fire/firestore';
+import { DocumentSnapshot, Firestore,collection
+  ,doc,getDoc, getDocs, query, where } from '@angular/fire/firestore';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 

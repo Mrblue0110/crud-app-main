@@ -1,13 +1,15 @@
-import { Component, OnInit, EventEmitter, Output, LOCALE_ID, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { FormGroup, FormControl} from '@angular/forms'
 import { AuthServiceService } from '../auth-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
-import { Firestore, query, collection, addDoc, doc, updateDoc, deleteDoc, collectionData, Timestamp, getDocs, where, orderBy} from '@angular/fire/firestore';
+import { Firestore, query, collection,
+  addDoc, doc, deleteDoc,Timestamp,
+  getDocs, where, orderBy} from '@angular/fire/firestore';
 import { PopupcopyComponent } from '../popupcopy/popupcopy.component';
 import { Router } from '@angular/router';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource} from '@angular/material/table';
+import { MatPaginator} from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { PopsinerComponent } from '../popsiner/popsiner.component';
 import { DatePipe } from '@angular/common';

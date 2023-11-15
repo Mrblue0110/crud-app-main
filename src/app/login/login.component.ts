@@ -2,15 +2,13 @@ import { Component, OnInit,EventEmitter,Output} from '@angular/core';
 import {FormGroup,FormControl,Validators} from '@angular/forms'
 import { AuthServiceService } from '../auth-service.service';
 import { Router } from '@angular/router';
-import { Firestore, addDoc, collection, getDocs, query, where } from '@angular/fire/firestore';
+import { Firestore,
+  collection, getDocs,
+  query, where } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { PopsinerComponent } from '../popsiner/popsiner.component';
 /*OBJECTS*/
 
-interface UserKey {
-  Email: string;
-  Key: string;
-}
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

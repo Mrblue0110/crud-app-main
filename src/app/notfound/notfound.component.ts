@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentSnapshot, Firestore, Timestamp, doc, getDoc } from '@angular/fire/firestore';
+import { DocumentSnapshot, Firestore,doc, getDoc } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
